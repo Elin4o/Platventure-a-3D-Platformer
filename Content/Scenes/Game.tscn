@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Content/Scenes/Levels/RealTestLevel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Content/Scripts/Game.gd" type="Script" id=3]
+
+[node name="Game" type="Node"]
+script = ExtResource( 3 )
+
+[node name="LevelLayer" type="CanvasLayer" parent="."]
+
+[node name="World" parent="LevelLayer" instance=ExtResource( 1 )]

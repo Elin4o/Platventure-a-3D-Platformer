@@ -1,0 +1,352 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Content/Font/upheaval/upheavtt.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Content/Scripts/Levels/Start Menu.gd" type="Script" id=2]
+[ext_resource path="res://Content/Shaders/Zelda_Water_Shader.gdshader" type="Shader" id=3]
+[ext_resource path="res://Content/Font/Start Menu.tres" type="Theme" id=4]
+[ext_resource path="res://Content/Font/Pixel_Font.tres" type="DynamicFont" id=5]
+
+[sub_resource type="PlaneMesh" id=7]
+
+[sub_resource type="ShaderMaterial" id=8]
+shader = ExtResource( 3 )
+shader_param/WATER_COL = Color( 0.04, 0.38, 0.88, 1 )
+shader_param/WATER2_COL = Color( 0.04, 0.35, 0.78, 1 )
+shader_param/FOAM_COL = Color( 0.8125, 0.9609, 0.9648, 1 )
+shader_param/distortion_speed = 2.0
+shader_param/tile = Vector2( 64, 64 )
+shader_param/height = 2.0
+shader_param/wave_size = Vector2( 2, 2 )
+shader_param/wave_speed = 1.5
+
+[sub_resource type="DynamicFont" id=3]
+size = 62
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 2
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 50
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 5
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 50
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 6
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 50
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 5
+font_data = ExtResource( 1 )
+
+[node name="Start Menu" type="CanvasLayer"]
+script = ExtResource( 2 )
+level_name = "Menu"
+
+[node name="Background" type="Spatial" parent="."]
+
+[node name="ViewportContainer" type="ViewportContainer" parent="Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Viewport" type="Viewport" parent="Background/ViewportContainer"]
+size = Vector2( 1024, 600 )
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="Camera" type="Camera" parent="Background/ViewportContainer/Viewport"]
+transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, -1, 27.2781, 68.4007 )
+current = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Background"]
+transform = Transform( 245.329, 0, 0, 0, 1, 0, 0, 0, 135.012, 0, 0, 0 )
+mesh = SubResource( 7 )
+material/0 = SubResource( 8 )
+
+[node name="MenuControl" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 4 )
+
+[node name="Menu" type="MarginContainer" parent="MenuControl"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_top = 80
+custom_constants/margin_left = 60
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuControl/Menu"]
+margin_left = 60.0
+margin_top = 80.0
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="Title" type="Label" parent="MenuControl/Menu/VBoxContainer"]
+margin_right = 480.0
+margin_bottom = 117.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 3 )
+text = "Project Title
+"
+
+[node name="MarginContainer" type="MarginContainer" parent="MenuControl/Menu/VBoxContainer"]
+margin_top = 121.0
+margin_right = 964.0
+margin_bottom = 201.0
+rect_min_size = Vector2( 0, 80 )
+
+[node name="Start_Button" type="Button" parent="MenuControl/Menu/VBoxContainer"]
+margin_top = 205.0
+margin_right = 166.0
+margin_bottom = 251.0
+size_flags_horizontal = 0
+theme = ExtResource( 4 )
+custom_fonts/font = SubResource( 4 )
+text = "Start"
+align = 0
+
+[node name="Options" type="Button" parent="MenuControl/Menu/VBoxContainer"]
+margin_top = 255.0
+margin_right = 242.0
+margin_bottom = 301.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 5 )
+text = "Options"
+align = 0
+
+[node name="Exit" type="Button" parent="MenuControl/Menu/VBoxContainer"]
+margin_top = 305.0
+margin_right = 131.0
+margin_bottom = 351.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 6 )
+text = "Quit"
+align = 0
+
+[node name="Options" type="Control" parent="MenuControl"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuControl/Options"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -112.5
+margin_top = -69.0
+margin_right = 112.5
+margin_bottom = 69.0
+custom_constants/separation = 15
+
+[node name="Video" type="Button" parent="MenuControl/Options/VBoxContainer"]
+margin_right = 225.0
+margin_bottom = 33.0
+text = "Video"
+
+[node name="Audio" type="Button" parent="MenuControl/Options/VBoxContainer"]
+margin_top = 48.0
+margin_right = 225.0
+margin_bottom = 81.0
+text = "Audio"
+
+[node name="BackFromOptions" type="Button" parent="MenuControl/Options"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -96.0
+margin_top = -96.0
+margin_right = 96.0
+text = "Back"
+
+[node name="Video" type="Control" parent="MenuControl"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MenuControl/Video"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -144.0
+margin_top = -62.0
+margin_right = 144.0
+margin_bottom = 60.0
+
+[node name="Labels" type="VBoxContainer" parent="MenuControl/Video/HBoxContainer"]
+margin_right = 254.0
+margin_bottom = 122.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="FullScreen" type="Label" parent="MenuControl/Video/HBoxContainer/Labels"]
+margin_right = 254.0
+margin_bottom = 33.0
+size_flags_horizontal = 3
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 5 )
+text = "FullScreen"
+
+[node name="Borderless" type="Label" parent="MenuControl/Video/HBoxContainer/Labels"]
+margin_top = 42.0
+margin_right = 254.0
+margin_bottom = 75.0
+size_flags_horizontal = 3
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 5 )
+text = "Borderless"
+
+[node name="VSync" type="Label" parent="MenuControl/Video/HBoxContainer/Labels"]
+margin_top = 84.0
+margin_right = 254.0
+margin_bottom = 117.0
+size_flags_horizontal = 3
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 5 )
+text = "vsync"
+
+[node name="Checkboxes" type="VBoxContainer" parent="MenuControl/Video/HBoxContainer"]
+margin_left = 258.0
+margin_right = 288.0
+margin_bottom = 122.0
+rect_min_size = Vector2( 30, 30 )
+size_flags_vertical = 3
+theme = ExtResource( 4 )
+
+[node name="FullScreen" type="CheckBox" parent="MenuControl/Video/HBoxContainer/Checkboxes"]
+margin_right = 30.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+align = 1
+icon_align = 1
+
+[node name="Borderless" type="CheckBox" parent="MenuControl/Video/HBoxContainer/Checkboxes"]
+margin_top = 42.0
+margin_right = 30.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+align = 1
+icon_align = 1
+
+[node name="VSync" type="CheckBox" parent="MenuControl/Video/HBoxContainer/Checkboxes"]
+margin_top = 84.0
+margin_right = 30.0
+margin_bottom = 122.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+align = 1
+icon_align = 1
+
+[node name="BackFromVideo" type="Button" parent="MenuControl/Video"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -96.0
+margin_top = -96.0
+margin_right = 96.0
+text = "Back"
+
+[node name="Audio" type="Control" parent="MenuControl"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MenuControl/Audio"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -179.0
+margin_top = -53.5
+margin_right = 179.0
+margin_bottom = 53.5
+
+[node name="Labels" type="VBoxContainer" parent="MenuControl/Audio/HBoxContainer"]
+margin_right = 174.0
+margin_bottom = 107.0
+size_flags_horizontal = 3
+
+[node name="Master" type="Label" parent="MenuControl/Audio/HBoxContainer/Labels"]
+margin_right = 174.0
+margin_bottom = 33.0
+text = "Master"
+
+[node name="Music" type="Label" parent="MenuControl/Audio/HBoxContainer/Labels"]
+margin_top = 37.0
+margin_right = 174.0
+margin_bottom = 70.0
+text = "Music"
+
+[node name="SoundFX" type="Label" parent="MenuControl/Audio/HBoxContainer/Labels"]
+margin_top = 74.0
+margin_right = 174.0
+margin_bottom = 107.0
+text = "Sound FX"
+
+[node name="Sliders" type="VBoxContainer" parent="MenuControl/Audio/HBoxContainer"]
+margin_left = 178.0
+margin_right = 358.0
+margin_bottom = 107.0
+rect_min_size = Vector2( 180, 100 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Master" type="HSlider" parent="MenuControl/Audio/HBoxContainer/Sliders"]
+margin_right = 180.0
+margin_bottom = 33.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+value = 50.0
+
+[node name="Music" type="HSlider" parent="MenuControl/Audio/HBoxContainer/Sliders"]
+margin_top = 37.0
+margin_right = 180.0
+margin_bottom = 70.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+value = 50.0
+
+[node name="SoundFX" type="HSlider" parent="MenuControl/Audio/HBoxContainer/Sliders"]
+margin_top = 74.0
+margin_right = 180.0
+margin_bottom = 107.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+value = 50.0
+
+[node name="BackFromAudio" type="Button" parent="MenuControl/Audio"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -96.0
+margin_top = -96.0
+margin_right = 96.0
+text = "Back"
+
+[connection signal="pressed" from="MenuControl/Menu/VBoxContainer/Start_Button" to="." method="_on_Start_Button_pressed"]
+[connection signal="pressed" from="MenuControl/Menu/VBoxContainer/Options" to="." method="_on_Options_pressed"]
+[connection signal="pressed" from="MenuControl/Menu/VBoxContainer/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="pressed" from="MenuControl/Options/VBoxContainer/Video" to="." method="_on_Video_pressed"]
+[connection signal="pressed" from="MenuControl/Options/VBoxContainer/Audio" to="." method="_on_Audio_pressed"]
+[connection signal="pressed" from="MenuControl/Options/BackFromOptions" to="." method="_on_BackFromOptions_pressed"]
+[connection signal="toggled" from="MenuControl/Video/HBoxContainer/Checkboxes/FullScreen" to="." method="_on_FullScreen_toggled"]
+[connection signal="toggled" from="MenuControl/Video/HBoxContainer/Checkboxes/Borderless" to="." method="_on_Borderless_toggled"]
+[connection signal="toggled" from="MenuControl/Video/HBoxContainer/Checkboxes/VSync" to="." method="_on_VSync_toggled"]
+[connection signal="pressed" from="MenuControl/Video/BackFromVideo" to="." method="_on_BackFromVideo_pressed"]
+[connection signal="value_changed" from="MenuControl/Audio/HBoxContainer/Sliders/Master" to="." method="_on_Master_value_changed"]
+[connection signal="value_changed" from="MenuControl/Audio/HBoxContainer/Sliders/Music" to="." method="_on_Music_value_changed"]
+[connection signal="value_changed" from="MenuControl/Audio/HBoxContainer/Sliders/SoundFX" to="." method="_on_SoundFX_value_changed"]
+[connection signal="pressed" from="MenuControl/Audio/BackFromAudio" to="." method="_on_BackFromAudio_pressed"]

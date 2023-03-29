@@ -1,0 +1,21 @@
+extends Spatial
+
+export var bullet : PackedScene
+
+var can_shoot : bool = true
+
+func _physics_process(delta):
+	if can_shoot:
+		shoot()
+		
+func shoot():
+	can_shoot = false
+	
+	$ShootTimer.start()
+	
+	var b = bullet.instance()
+	
+	$TurretBody.add_child(b)
+
+func _on_ShootTimer_timeout():
+	can_shoot = true

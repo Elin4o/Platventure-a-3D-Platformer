@@ -1,0 +1,63 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Content/Scenes/Enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Content/Scripts/Enemy_Path_Follow.gd" type="Script" id=2]
+[ext_resource path="res://Content/Characters/resurrect64-1x.png" type="Texture" id=3]
+
+[sub_resource type="Curve3D" id=1]
+_data = {
+"points": PoolVector3Array( -0.730767, -0.000732422, -0.82584, 0.730767, 0.000732422, 0.82584, 0, 0, 0, 0.467289, -0.000869751, -1.14394, -0.467289, 0.000869751, 1.14394, 0, 0, 16, 0.491203, 0.00141907, 1.49084, -0.491203, -0.00141907, -1.49084, -2, 0, 16, -0.694446, 0.00164795, 1.94562, 0.694446, -0.00164795, -1.94562, -2, 0, 0, -0.672008, -0.00109863, -1.90408, 0.672008, 0.00109863, 1.90408, 0.0195169, 1.52588e-05, 0.0292759 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 1, 1, 0, 1 )
+albedo_texture = ExtResource( 3 )
+metallic = 1.0
+metallic_specular = 1.0
+roughness = 0.0
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.313726, 0, 1, 1 )
+albedo_texture = ExtResource( 3 )
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "Walking-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "Walking-loop"
+
+[sub_resource type="AnimationNodeStateMachine" id=6]
+states/Running-loop/node = SubResource( 5 )
+states/Running-loop/position = Vector2( 435, 78 )
+states/Walking-loop/node = SubResource( 8 )
+states/Walking-loop/position = Vector2( 701, 67 )
+start_node = "Walking-loop"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=7]
+
+[node name="Enemy_Path_Follow" type="Spatial"]
+
+[node name="Path" type="Path" parent="."]
+curve = SubResource( 1 )
+
+[node name="PathFollow" type="PathFollow" parent="Path"]
+transform = Transform( -0.999947, 8.22608e-05, 0.0103181, 8.3234e-05, 0.999997, 9.38689e-05, -0.0103182, 9.47233e-05, -0.999938, -2.44276, 0.000291027, 6.17251 )
+offset = 28.9227
+rotation_mode = 4
+script = ExtResource( 2 )
+
+[node name="Enemy" parent="Path/PathFollow" instance=ExtResource( 1 )]
+
+[node name="Body" parent="Path/PathFollow/Enemy/Player_Mesh/Armature/Skeleton" index="0"]
+material/0 = SubResource( 3 )
+material/1 = SubResource( 4 )
+
+[node name="AnimationTree" type="AnimationTree" parent="Path/PathFollow"]
+tree_root = SubResource( 6 )
+anim_player = NodePath("../Enemy/Player_Mesh/AnimationPlayer")
+active = true
+parameters/playback = SubResource( 7 )
+
+[editable path="Path/PathFollow/Enemy"]
+[editable path="Path/PathFollow/Enemy/Player_Mesh"]
