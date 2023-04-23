@@ -1,0 +1,17 @@
+// Game: Adventure Platformer
+// Format: Standard
+// entity 0
+{
+"classname" "worldspawn"
+"_tb_mod" "textures"
+"_tb_textures" "textures"
+// brush 0
+{
+( -192 -32 64 ) ( -192 -31 64 ) ( -192 -32 65 ) Grass 0 0 0 1 1
+( -32 -544 64 ) ( -32 -544 65 ) ( -31 -544 64 ) Grass 0 0 0 1 1
+( -32 -32 0 ) ( -31 -32 0 ) ( -32 -31 0 ) Grass 0 0 0 1 1
+( 32 32 32 ) ( 32 33 32 ) ( 33 32 32 ) Grass 0 0 0 1 1
+( 32 96 96 ) ( 33 96 96 ) ( 32 96 97 ) Grass 0 0 0 1 1
+( 32 32 96 ) ( 32 32 97 ) ( 32 33 96 ) Grass 0 0 0 1 1
+}
+}

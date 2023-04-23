@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Content/Colors/resurrect64-1x.png" type="Texture" id=1]
+[ext_resource path="res://Content/Assets/Enemies/Bullet.fbx" type="PackedScene" id=2]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_texture = ExtResource( 1 )
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color( 0, 0, 0, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
+
+[node name="Bullet" type="Spatial"]
+
+[node name="Bullet" parent="." instance=ExtResource( 2 )]
+
+[node name="Sphere" parent="Bullet/RootNode" index="0"]
+material/0 = SubResource( 1 )
+
+[node name="Sphere001" parent="Bullet/RootNode" index="1"]
+material/0 = SubResource( 1 )
+
+[node name="Sphere002" parent="Bullet/RootNode" index="2"]
+material/0 = SubResource( 1 )
+
+[node name="Cube" parent="Bullet/RootNode" index="3"]
+material/0 = SubResource( 1 )
+
+[node name="Cube001" parent="Bullet/RootNode" index="4"]
+material/0 = SubResource( 1 )
+
+[node name="Cube002" parent="Bullet/RootNode" index="5"]
+material/0 = SubResource( 1 )
+
+[editable path="Bullet"]

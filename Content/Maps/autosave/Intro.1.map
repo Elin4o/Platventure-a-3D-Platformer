@@ -1,0 +1,17 @@
+// Game: Adventure Platformer
+// Format: Standard
+// entity 0
+{
+"classname" "worldspawn"
+"_tb_mod" "textures"
+"_tb_textures" "textures"
+// brush 0
+{
+( -192 -64 -16 ) ( -192 -63 -16 ) ( -192 -64 -15 ) "TX Tileset Stone Ground" 27.666666 17.15039 0 1 1
+( -64 -64 -16 ) ( -64 -64 -15 ) ( -63 -64 -16 ) "TX Tileset Grass" 0 0 0 1 1
+( -64 -64 -96 ) ( -63 -64 -96 ) ( -64 -63 -96 ) "TX Tileset Grass" 0 0 0 1 1
+( 64 64 16 ) ( 64 65 16 ) ( 65 64 16 ) "TX Tileset Grass" -32.000004 -16.000002 1.7763568e-15 4 4
+( 64 928 16 ) ( 65 928 16 ) ( 64 928 17 ) "TX Tileset Grass" 0 0 0 1 1
+( 128 64 16 ) ( 128 64 17 ) ( 128 65 16 ) "TX Tileset Grass" 0 0 0 1 1
+}
+}

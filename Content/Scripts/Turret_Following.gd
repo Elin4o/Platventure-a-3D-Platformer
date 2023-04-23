@@ -22,6 +22,8 @@ func _on_SightRange_body_entered(body):
 	if body.is_in_group("Player"):
 		state = ALERT
 		target = body
+		var shooting = get_node("StationaryTurret/ShootTimer")			
+		shooting.start()
 
 
 
@@ -31,10 +33,9 @@ func _on_SightRange_body_exited(body):
 func _process(delta):
 	match state:
 		IDLE:
-			pass
+			var shooting = get_node("StationaryTurret")
+			shooting.can_shoot = false
 		ALERT:
 			eyes.look_at(target.global_transform.origin,Vector3.UP)
-			rotate_y(deg2rad(eyes.rotation.y * TURN_SPEED))
-		
-		
+			rotate_y(deg2rad(eyes.rotation.y * TURN_SPEED))			
 		

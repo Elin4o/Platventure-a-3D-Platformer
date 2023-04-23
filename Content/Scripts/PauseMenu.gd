@@ -86,5 +86,3 @@ func _on_BackFromAudio_pressed():
 func _on_BackFromOptions_pressed():
 	show_and_hide(menu,options)
 
-func volume(bus_index,value):
-	AudioServer.set_bus_volume_db(bus_index,value)

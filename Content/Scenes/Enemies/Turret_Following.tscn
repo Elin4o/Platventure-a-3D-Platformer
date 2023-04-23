@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Content/Scripts/Turret_Following.gd" type="Script" id=1]
+[ext_resource path="res://Content/Scenes/Enemies/StationaryTurret.tscn" type="PackedScene" id=2]
+
+[sub_resource type="SphereShape" id=1]
+radius = 30.0
+
+[node name="Turret_Following" type="Spatial" groups=["Turret"]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.00562, 0.242842, 0 )
+script = ExtResource( 1 )
+TURN_SPEED = 5
+
+[node name="StationaryTurret" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, 0, 0 )
+
+[node name="ShootTimer" parent="StationaryTurret" index="0"]
+wait_time = 1.0
+
+[node name="Raycast_Follow" type="RayCast" parent="."]
+enabled = true
+cast_to = Vector3( 0, 0, -30 )
+debug_shape_thickness = 5
+
+[node name="SightRange" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="SightRange"]
+shape = SubResource( 1 )
+
+[node name="Eyes" type="Spatial" parent="."]
+transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0 )
+
+[connection signal="body_entered" from="SightRange" to="." method="_on_SightRange_body_entered"]
+[connection signal="body_exited" from="SightRange" to="." method="_on_SightRange_body_exited"]
+
+[editable path="StationaryTurret"]
+[editable path="StationaryTurret/Turret"]

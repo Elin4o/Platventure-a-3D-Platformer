@@ -15,9 +15,9 @@ func load_data():
 			"fullscreen_on" : false,
 			"vsync_on" : false,
 			"borderless_on":false,
-			"master_vol": -10,
-			"music_vol": -10,
-			"sfx_vol": -10
+			"master_vol": 0.5,
+			"music_vol": 0.5,
+			"sfx_vol": 0.5
 		}
 		save_data()
 	file.open(SAVEFILE,File.READ)

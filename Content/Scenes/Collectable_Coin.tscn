@@ -1,0 +1,123 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Content/Scripts/Collectable_Coin.gd" type="Script" id=1]
+[ext_resource path="res://Content/Assets/PickUps/Coin.fbx" type="PackedScene" id=2]
+[ext_resource path="res://Content/Colors/resurrect64-1x.png" type="Texture" id=3]
+[ext_resource path="res://Content/Sounds/SFX/pickupCoin.wav" type="AudioStream" id=4]
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_texture = ExtResource( 3 )
+emission_enabled = true
+emission = Color( 0, 0, 0, 1 )
+emission_energy = 5.18
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.246753, 1.0529, 1 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "Collected"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Coin/RootNode/Cylinder:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, -2, 0 ), Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Coin/RootNode/Cylinder:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -3.41509e-06, 90, -90 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Coin/RootNode/Cylinder:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Coin/RootNode/Cylinder:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Rotating"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Coin/RootNode/Cylinder:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( -3.41509e-06, 90, -90 ), Vector3( 0, 270, -90 ) ]
+}
+
+[node name="Collectable_Coin" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+script = ExtResource( 1 )
+
+[node name="Coin" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0.3, 0 )
+
+[node name="Cylinder" parent="Coin/RootNode" index="0"]
+transform = Transform( 5.96046e-06, -4.37114e-06, 100, -100, -4.37114e-06, 5.96046e-06, 4.37114e-06, -100, -4.37114e-06, 0, 0, 0 )
+material/0 = SubResource( 2 )
+
+[node name="Area" type="Area" parent="Coin"]
+transform = Transform( -0.256854, 0, 0.96645, 0, 1, 0, -0.96645, 0, -0.256854, 0, -0.174806, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Coin/Area"]
+transform = Transform( 0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 0, 0.181483, 0 )
+shape = SubResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Collected = SubResource( 5 )
+anims/RESET = SubResource( 3 )
+anims/Rotating = SubResource( 4 )
+
+[node name="Collected" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 4 )
+unit_db = -42.5
+unit_size = 0.2
+bus = "SFX"
+
+[connection signal="body_entered" from="Coin/Area" to="." method="_on_Area_body_entered"]
+[connection signal="finished" from="Collected" to="." method="_on_Collected_finished"]
+
+[editable path="Coin"]

@@ -2,6 +2,8 @@ extends Area
 
 var dir = Vector3()
 
+export var damage_Ammount = 1
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready()-> void:
@@ -14,7 +16,8 @@ func _process(delta: float)-> void:
 
 func _on_Harmful_Projectile_body_entered(body):
 	if body.is_in_group("Player"):
-		body.health.current -= 1
+		body.health.current -= damage_Ammount
+		body.hurt_Sound()
 
 	queue_free()
 

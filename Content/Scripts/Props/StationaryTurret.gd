@@ -15,7 +15,9 @@ func shoot():
 	
 	var b = bullet.instance()
 	
-	$TurretBody.add_child(b)
+	$BulletPoint.add_child(b)
 
 func _on_ShootTimer_timeout():
 	can_shoot = true
+	$Shoot.play()
+	$Particles.emitting = true

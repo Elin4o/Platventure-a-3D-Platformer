@@ -1,12 +1,16 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Content/Font/upheaval/upheavtt.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Content/Scripts/Levels/Start Menu.gd" type="Script" id=2]
 [ext_resource path="res://Content/Shaders/Zelda_Water_Shader.gdshader" type="Shader" id=3]
 [ext_resource path="res://Content/Font/Start Menu.tres" type="Theme" id=4]
 [ext_resource path="res://Content/Font/Pixel_Font.tres" type="DynamicFont" id=5]
+[ext_resource path="res://Content/Sounds/SFX/click_004.ogg" type="AudioStream" id=6]
+[ext_resource path="res://Content/Assets/textures/Grass_01.png" type="Texture" id=7]
+[ext_resource path="res://Content/Scenes/Props/Palm_Tree.tscn" type="PackedScene" id=8]
 
 [sub_resource type="PlaneMesh" id=7]
+size = Vector2( 8, 8 )
 
 [sub_resource type="ShaderMaterial" id=8]
 shader = ExtResource( 3 )
@@ -18,6 +22,9 @@ shader_param/tile = Vector2( 64, 64 )
 shader_param/height = 2.0
 shader_param/wave_size = Vector2( 2, 2 )
 shader_param/wave_speed = 1.5
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_texture = ExtResource( 7 )
 
 [sub_resource type="DynamicFont" id=3]
 size = 62
@@ -61,15 +68,30 @@ anchor_bottom = 1.0
 size = Vector2( 1024, 600 )
 handle_input_locally = false
 render_target_update_mode = 3
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
 
 [node name="Camera" type="Camera" parent="Background/ViewportContainer/Viewport"]
-transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, -1, 27.2781, 68.4007 )
+transform = Transform( 1, 0, 0, 0, 0.963775, -0.266717, 0, 0.266717, 0.963775, -13.8057, 6.19617, 16.2842 )
 current = true
+far = 983.7
 
 [node name="MeshInstance" type="MeshInstance" parent="Background"]
 transform = Transform( 245.329, 0, 0, 0, 1, 0, 0, 0, 135.012, 0, 0, 0 )
 mesh = SubResource( 7 )
 material/0 = SubResource( 8 )
+
+[node name="Palm_Tree" parent="Background" instance=ExtResource( 8 )]
+transform = Transform( 0.938612, -0.245964, -0.241888, 0.202727, 0.960599, -0.190133, 0.279124, 0.129424, 0.951493, -3.85584, 3.32375, -0.890595 )
+
+[node name="Palm_Tree2" parent="Background" instance=ExtResource( 8 )]
+transform = Transform( 0.93778, -1.49012e-08, -0.34723, -0.129738, 0.927575, -0.350388, 0.322082, 0.373635, 0.869861, 0, 3, 0 )
+
+[node name="CSGCylinder" type="CSGCylinder" parent="Background"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+radius = 13.335
+height = 6.978
+material = SubResource( 9 )
 
 [node name="MenuControl" type="Control" parent="."]
 anchor_right = 1.0
@@ -89,11 +111,11 @@ margin_right = 1024.0
 margin_bottom = 600.0
 
 [node name="Title" type="Label" parent="MenuControl/Menu/VBoxContainer"]
-margin_right = 480.0
+margin_right = 423.0
 margin_bottom = 117.0
 size_flags_horizontal = 0
 custom_fonts/font = SubResource( 3 )
-text = "Project Title
+text = "Platventure
 "
 
 [node name="MarginContainer" type="MarginContainer" parent="MenuControl/Menu/VBoxContainer"]
@@ -308,7 +330,9 @@ margin_right = 180.0
 margin_bottom = 33.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-value = 50.0
+max_value = 1.0
+step = 0.1
+value = 1.0
 
 [node name="Music" type="HSlider" parent="MenuControl/Audio/HBoxContainer/Sliders"]
 margin_top = 37.0
@@ -316,7 +340,9 @@ margin_right = 180.0
 margin_bottom = 70.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-value = 50.0
+max_value = 1.0
+step = 0.1
+value = 1.0
 
 [node name="SoundFX" type="HSlider" parent="MenuControl/Audio/HBoxContainer/Sliders"]
 margin_top = 74.0
@@ -324,7 +350,9 @@ margin_right = 180.0
 margin_bottom = 107.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-value = 50.0
+max_value = 1.0
+step = 0.1
+value = 1.0
 
 [node name="BackFromAudio" type="Button" parent="MenuControl/Audio"]
 anchor_left = 0.5
@@ -335,6 +363,11 @@ margin_left = -96.0
 margin_top = -96.0
 margin_right = 96.0
 text = "Back"
+
+[node name="Click" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 6 )
+unit_size = 18.0
+bus = "SFX"
 
 [connection signal="pressed" from="MenuControl/Menu/VBoxContainer/Start_Button" to="." method="_on_Start_Button_pressed"]
 [connection signal="pressed" from="MenuControl/Menu/VBoxContainer/Options" to="." method="_on_Options_pressed"]

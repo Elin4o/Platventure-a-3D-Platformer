@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Content/Scenes/Enemies/Enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Content/Scripts/Enemy_Path_Follow.gd" type="Script" id=2]
+[ext_resource path="res://Content/Assets/Enemies/Enemy_Normal.glb" type="PackedScene" id=3]
+[ext_resource path="res://Content/Colors/resurect_corrected_texture.png" type="Texture" id=4]
+[ext_resource path="res://Content/Scripts/Enemy_Normal_Anim.gd" type="Script" id=5]
+
+[sub_resource type="Curve3D" id=1]
+_data = {
+"points": PoolVector3Array( -0.730767, -0.000732422, -0.82584, 0.730767, 0.000732422, 0.82584, 2, 0.15003, 0.27891, 0.467289, -0.000869751, -1.14394, -0.467289, 0.000869751, 1.14394, 3, 0.15003, 16.2789, 0.491203, 0.00141907, 1.49084, -0.491203, -0.00141907, -1.49084, -2, 0, 16, -0.694446, 0.00164795, 1.94562, 0.694446, -0.00164795, -1.94562, -2, 0, 0, -0.672008, -0.00109863, -1.90408, 0.672008, 0.00109863, 1.90408, 2, 0.15003, 0.27891 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_texture = ExtResource( 4 )
+
+[node name="Enemy_Path_Follow" type="Spatial"]
+
+[node name="Path" type="Path" parent="."]
+curve = SubResource( 1 )
+
+[node name="PathFollow" type="PathFollow" parent="Path"]
+transform = Transform( -0.998886, -0.0457459, -0.0115746, -0.0457504, 0.99895, 0.00010771, 0.0115577, 0.000637137, -0.999924, -2.43803, 1.29288e-05, 8.84763 )
+offset = 28.9227
+rotation_mode = 4
+script = ExtResource( 2 )
+
+[node name="Enemy" parent="Path/PathFollow" instance=ExtResource( 1 )]
+transform = Transform( 1.2, -3.75167e-12, 0, 1.04592e-11, 1.2, 0, -1.86265e-09, -1.45519e-11, 1.2, 0, 0.237771, 0 )
+
+[node name="CollisionShape" parent="Path/PathFollow/Enemy" index="0"]
+transform = Transform( 0.8, 9.31323e-10, -5.8576e-09, -6.0445e-09, -3.5041e-08, -1, 0, 0.8, -4.36557e-08, 0, -0.387893, 0.182949 )
+
+[node name="CollisionShape" parent="Path/PathFollow/Enemy/Area" index="0"]
+transform = Transform( 1, 6.36282e-09, 1.86265e-09, -1.22118e-08, 1, -1.16415e-10, -9.31323e-10, -5.82077e-11, 1, 0, 0.824874, 0.301236 )
+
+[node name="Enemy_Normal" parent="Path/PathFollow/Enemy" instance=ExtResource( 3 )]
+transform = Transform( 1, -2.95586e-12, 0, 2.69438e-11, 1, 0, 0, 0, 1, 0, -1.36657, 4.76837e-07 )
+script = ExtResource( 5 )
+
+[node name="Skeleton" parent="Path/PathFollow/Enemy/Enemy_Normal/Armature" index="0"]
+transform = Transform( 1, -1.86265e-09, 2.27374e-12, -1.86265e-09, 1, -7.27596e-12, -1.29603e-11, -1.45519e-11, 1, 0, 0, 0 )
+
+[node name="Body003" parent="Path/PathFollow/Enemy/Enemy_Normal/Armature/Skeleton" index="0"]
+material/0 = SubResource( 5 )
+
+[node name="AnimationPlayer" parent="Path/PathFollow/Enemy/Enemy_Normal" index="1"]
+playback_speed = 1.25
+
+[editable path="Path/PathFollow/Enemy"]
+[editable path="Path/PathFollow/Enemy/Enemy_Normal"]

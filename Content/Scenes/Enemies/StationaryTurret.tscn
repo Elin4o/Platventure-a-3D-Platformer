@@ -1,0 +1,84 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Content/Scripts/Props/StationaryTurret.gd" type="Script" id=1]
+[ext_resource path="res://Content/Assets/Enemies/Turret.fbx" type="PackedScene" id=2]
+[ext_resource path="res://Content/Colors/resurrect64-1x.png" type="Texture" id=3]
+[ext_resource path="res://Content/Scenes/Enemies/Harmful_Projectile.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Content/Sounds/SFX/explosion.wav" type="AudioStream" id=5]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_texture = ExtResource( 3 )
+emission_enabled = true
+emission = Color( 0, 0, 0, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="CylinderShape" id=4]
+height = 2.13021
+radius = 1.02795
+
+[sub_resource type="ParticlesMaterial" id=5]
+emission_shape = 1
+emission_sphere_radius = 0.01
+direction = Vector3( 0, 1, 0 )
+spread = 180.0
+flatness = 1.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 2.0
+damping = 1.0
+angle = 720.0
+angle_random = 1.0
+
+[sub_resource type="SpatialMaterial" id=7]
+flags_unshaded = true
+proximity_fade_enable = true
+proximity_fade_distance = 1.5
+
+[sub_resource type="SphereMesh" id=6]
+material = SubResource( 7 )
+radius = 0.75
+height = 1.5
+radial_segments = 8
+rings = 8
+
+[node name="StationaryTurret" type="StaticBody"]
+script = ExtResource( 1 )
+bullet = ExtResource( 4 )
+
+[node name="ShootTimer" type="Timer" parent="."]
+wait_time = 2.5
+
+[node name="Turret" parent="." instance=ExtResource( 2 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
+
+[node name="Cylinder001" parent="Turret/RootNode" index="0"]
+material/0 = SubResource( 1 )
+
+[node name="BulletPoint" type="Spatial" parent="." groups=["Turret"]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25736, 0.70145, 0 )
+
+[node name="CollisionShape3" type="CollisionShape" parent="."]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.257132, 0.698568, 0 )
+shape = SubResource( 4 )
+
+[node name="Shoot" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 5 )
+unit_db = -40.0
+unit_size = 0.1
+max_distance = 50.0
+bus = "SFX"
+emission_angle_enabled = true
+
+[node name="Particles" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.77387, 0.866888, 0 )
+emitting = false
+amount = 9
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 5 )
+draw_pass_1 = SubResource( 6 )
+
+[connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]
+
+[editable path="Turret"]

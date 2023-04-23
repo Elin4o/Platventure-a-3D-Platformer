@@ -1,5 +1,8 @@
 extends KinematicBody
 
+
+signal collected_coin
+export (PackedScene) var foot_dust
 export (NodePath) var animationTree
 export var normal_speed:= 8
 export var max_speed := 12
@@ -17,13 +20,14 @@ var _snap_vector := Vector3.DOWN
 var respawn_point = Vector3(0,2.5,0)
 var last_checkpoint = null
 var stop_on_slope := true
+var collected_coins = 0
 onready var floor_max_angle: float = deg2rad(46.0)
 onready var gravity = (ProjectSettings.get_setting("physics/3d/default_gravity") * gravity_multiplier)
 onready var health = $Health
 onready var healthbar = $UI/Interface/HealthBar
 onready var _anim_tree = get_node(animationTree) 
 onready var _spring_arm : SpringArm = $SpringArm
-onready var _model : Spatial = $Player
+onready var _model : Spatial = $PlayerMesh
 
 func _physics_process(delta:float) -> void:
 	# Jumping conditionals
@@ -46,6 +50,7 @@ func _physics_process(delta:float) -> void:
 		jump_released = false
 		_snap_vector = Vector3.ZERO
 		_anim_tree["parameters/playback"].travel("Jumping")
+		$Jumping.play()
 	
 	elif is_idling:
 		_snap_vector = Vector3.DOWN
@@ -53,12 +58,19 @@ func _physics_process(delta:float) -> void:
 	elif is_walking:
 		_snap_vector = Vector3.DOWN
 		_anim_tree["parameters/playback"].travel("Walking")
+		if !$Walking.playing:
+			$Walking.play()
+		
 	elif is_running:
 		_snap_vector = Vector3.DOWN
 		_anim_tree["parameters/playback"].travel("Running")
-		
+		if !$Running.playing:
+			handle_footdust()
+			$Running.play()
+	
 	elif just_landed:
 		_snap_vector = Vector3.DOWN
+		
 	elif is_falling:
 		_anim_tree["parameters/playback"].travel("Jumping")
 	
@@ -77,6 +89,13 @@ func _ready():
 	health.connect("max_changed", healthbar, "set_max")
 	health.initialize()
 
+func handle_footdust():
+	if(is_on_floor()):
+		var footdust = foot_dust.instance()
+		footdust.emitting = true
+		footdust.transform.origin = $PlayerMesh/Foot.global_translation
+		get_parent().add_child(footdust)
+	
 func slopes(delta):
 	#Slope Condition
 	if is_on_floor():
@@ -145,6 +164,9 @@ func _process(_delta)->void:
 func kill():
 	global_transform.origin = respawn_point
 	health.current = 3
+	
+func hurt_Sound():
+	$Hurt.play()
 
 func set_checkpoint(pos,object):
 	respawn_point = pos
@@ -162,3 +184,5 @@ func _on_EnemyDetection_body_entered(body):
 		move_and_slide_with_snap(_velocity,_snap_vector)
 
 		_velocity.x = -30
+		$Hurt.play()
+		

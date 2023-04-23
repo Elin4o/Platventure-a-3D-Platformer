@@ -255,6 +255,7 @@ margin_right = 180.0
 margin_bottom = 33.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+step = 10.0
 value = 50.0
 
 [node name="Music" type="HSlider" parent="Audio/HBoxContainer/Sliders"]
@@ -263,6 +264,7 @@ margin_right = 180.0
 margin_bottom = 70.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+step = 10.0
 value = 50.0
 
 [node name="SoundFX" type="HSlider" parent="Audio/HBoxContainer/Sliders"]
@@ -271,6 +273,7 @@ margin_right = 180.0
 margin_bottom = 107.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+step = 10.0
 value = 50.0
 
 [node name="BackFromAudio" type="Button" parent="Audio"]

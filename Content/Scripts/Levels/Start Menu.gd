@@ -41,6 +41,7 @@ func _on_Start_Button_pressed():
 
 
 func _on_Options_pressed():
+	play_soundFX()
 	show_and_hide(options,menu)
 
 
@@ -54,21 +55,27 @@ func show_and_hide(first,second):
 
 
 func _on_Video_pressed():
+	play_soundFX()
 	show_and_hide(video,options)
 
 func _on_FullScreen_toggled(button_pressed):
+	play_soundFX()
 	GlobalSettings.toggle_fullscreen(button_pressed)
 
 func _on_Borderless_toggled(button_pressed):
+	play_soundFX()
 	GlobalSettings.toggle_borderless(button_pressed)
 
 func _on_VSync_toggled(button_pressed):
+	play_soundFX()
 	GlobalSettings.toggle_vsync(button_pressed)
 
 func _on_BackFromVideo_pressed():
+	play_soundFX()
 	show_and_hide(options,video)
 
 func _on_Audio_pressed():
+	play_soundFX()
 	show_and_hide(audio,options)
 
 func _on_Master_value_changed(value):
@@ -81,10 +88,12 @@ func _on_SoundFX_value_changed(value):
 	GlobalSettings.update_sfx_vol(value)
 
 func _on_BackFromAudio_pressed():
+	play_soundFX()
 	show_and_hide(options,audio)
 
 func _on_BackFromOptions_pressed():
+	play_soundFX()
 	show_and_hide(menu,options)
 
-
-
+func play_soundFX():
+	$Click.play()

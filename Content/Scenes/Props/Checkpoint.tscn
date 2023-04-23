@@ -1,19 +1,134 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Content/Scripts/Props/Checkpoint.gd" type="Script" id=1]
+[ext_resource path="res://Content/Colors/resurrect64-1x.png" type="Texture" id=2]
+[ext_resource path="res://Content/Assets/PickUps/Pole.fbx" type="PackedScene" id=3]
+[ext_resource path="res://Content/Sounds/SFX/flagup.wav" type="AudioStream" id=4]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 7.9038, 6, 7 )
 
-[sub_resource type="CylinderMesh" id=2]
-top_radius = 0.5
-bottom_radius = 0.5
-height = 6.0
+[sub_resource type="SpatialMaterial" id=2]
+albedo_texture = ExtResource( 2 )
 
-[sub_resource type="CubeMesh" id=4]
-size = Vector3( 2, 2, 1 )
+[sub_resource type="PlaneMesh" id=3]
+size = Vector2( 3.5, 1.8 )
 
-[sub_resource type="SpatialMaterial" id=5]
+[sub_resource type="SpatialMaterial" id=4]
+flags_unshaded = true
+params_cull_mode = 2
+albedo_color = Color( 0.898039, 0.294118, 0.0862745, 1 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "FlagUp"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pole/Flag:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 1.8, 1.138, 0 ), Vector3( 1.768, 7.95, 0 ) ]
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("Pole/Flag:material/0:albedo_color:r")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0.898039, -0.25, 0, 0.25, 0, 0.192157, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("Pole/Flag:material/0:albedo_color:g")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 0.294118, -0.25, 0, 0.25, 0, 0.898039, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath("Pole/Flag:material/0:albedo_color:b")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 0.0862745, -0.25, 0, 0.25, 0, 0.0862745, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3 )
+}
+tracks/4/type = "bezier"
+tracks/4/path = NodePath("Pole/Flag:material/0:albedo_color:a")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3 )
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pole/Flag:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 1.8, 7.95, 0 ), Vector3( 1.768, 1.13847, 4.97641e-08 ) ]
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("Pole/Flag:material/0:albedo_color:r")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0.192157, -0.25, 0, 0.25, 0, 0.898039, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("Pole/Flag:material/0:albedo_color:g")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 0.898039, -0.25, 0, 0.25, 0, 0.294118, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath("Pole/Flag:material/0:albedo_color:b")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 0.0862745, -0.25, 0, 0.25, 0, 0.0862745, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3 )
+}
+tracks/4/type = "bezier"
+tracks/4/path = NodePath("Pole/Flag:material/0:albedo_color:a")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3 )
+}
 
 [node name="Checkpoint" type="Spatial"]
 script = ExtResource( 1 )
@@ -21,21 +136,33 @@ script = ExtResource( 1 )
 [node name="Area" type="Area" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.11451, 0 )
 shape = SubResource( 1 )
 
 [node name="RespawnPoint" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 0 )
 
-[node name="Flag" type="Spatial" parent="."]
+[node name="Pole" parent="." instance=ExtResource( 3 )]
 
-[node name="MeshInstance" type="MeshInstance" parent="Flag"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
-mesh = SubResource( 2 )
+[node name="Cylinder" parent="Pole/RootNode" index="0"]
+material/0 = SubResource( 2 )
 
-[node name="Flag_Bool" type="MeshInstance" parent="Flag"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 5, 0 )
-mesh = SubResource( 4 )
-material/0 = SubResource( 5 )
+[node name="Cylinder001" parent="Pole/RootNode" index="1"]
+material/0 = SubResource( 2 )
+
+[node name="Flag" type="MeshInstance" parent="Pole"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.768, 1.13847, 4.97641e-08 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+reset_on_save = false
+anims/FlagUp = SubResource( 5 )
+anims/RESET = SubResource( 6 )
+
+[node name="FlagUp" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 4 )
 
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
+
+[editable path="Pole"]

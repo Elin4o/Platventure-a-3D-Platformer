@@ -19,16 +19,16 @@ func toggle_borderless(value):
 	SaveSettings.save_data()
 	
 func update_master_vol(vol):
-	AudioServer.set_bus_volume_db(0,vol)
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"),linear2db(vol))
 	SaveSettings.game_data.master_vol = vol
 	SaveSettings.save_data()
 	
 func update_music_vol(vol):
-	AudioServer.set_bus_volume_db(1,vol)
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"),linear2db(vol))
 	SaveSettings.game_data.music_vol = vol
 	SaveSettings.save_data()
 	
 func update_sfx_vol(vol):
-	AudioServer.set_bus_volume_db(2,vol)
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"),linear2db(vol))
 	SaveSettings.game_data.sfx_vol = vol
 	SaveSettings.save_data()

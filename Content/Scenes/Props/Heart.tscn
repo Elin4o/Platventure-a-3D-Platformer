@@ -1,24 +1,95 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Content/Scripts/Props/Heart.gd" type="Script" id=1]
-
-[sub_resource type="CapsuleMesh" id=1]
-mid_height = 0.001
-
-[sub_resource type="SpatialMaterial" id=3]
-albedo_color = Color( 1, 0.317647, 0.317647, 1 )
+[ext_resource path="res://Content/Colors/resurrect64-1x.png" type="Texture" id=2]
+[ext_resource path="res://Content/Assets/PickUps/Heart.fbx" type="PackedScene" id=3]
+[ext_resource path="res://Content/Assets/PickUps/Material_001.material" type="Material" id=4]
 
 [sub_resource type="CapsuleShape" id=2]
 height = 0.0607126
 
+[sub_resource type="SpatialMaterial" id=3]
+albedo_texture = ExtResource( 2 )
+emission_enabled = true
+emission = Color( 1, 0, 0, 1 )
+emission_energy = 2.63
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Heart:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Heart:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "RotatingAndMovingUpAndDown"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Heart:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 180, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Heart:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0.3, 0 ), Vector3( 0, 0, 0 ) ]
+}
+
 [node name="Heart" type="Area"]
 script = ExtResource( 1 )
-
-[node name="MeshInstance" type="MeshInstance" parent="."]
-mesh = SubResource( 1 )
-material/0 = SubResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 2 )
 
+[node name="Heart" parent="." instance=ExtResource( 3 )]
+
+[node name="Heart" parent="Heart/RootNode" index="0"]
+material/0 = SubResource( 3 )
+
+[node name="Glass" parent="Heart/RootNode" index="1"]
+material/0 = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 0.5
+anims/RESET = SubResource( 4 )
+anims/RotatingAndMovingUpAndDown = SubResource( 5 )
+
 [connection signal="body_entered" from="." to="." method="_on_Heart_body_entered"]
+
+[editable path="Heart"]
