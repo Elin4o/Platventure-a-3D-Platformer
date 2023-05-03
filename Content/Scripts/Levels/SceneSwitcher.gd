@@ -16,9 +16,19 @@ func handle_level_changed(current_level_name: String):
 	
 	match current_level_name:
 		"Menu":
-			next_level_name = "00"
-		"00":
-			next_level_name = "Menu"	
+			next_level_name = "Intro"
+		"Intro":
+			next_level_name = "01"	
+		"01":
+			next_level_name = "02"	
+		"02":
+			next_level_name = "03"	
+		"03":
+			next_level_name = "04"	
+		"04":
+			next_level_name = "Credits"
+		"Credits":
+			next_level_name = "Menu"
 		_:
 			return
 			

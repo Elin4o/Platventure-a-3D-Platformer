@@ -1,0 +1,156 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Content/Font/Start Menu.tres" type="Theme" id=1]
+[ext_resource path="res://Content/Scripts/End_Scene.gd" type="Script" id=2]
+[ext_resource path="res://Content/Font/upheaval/upheavtt.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Content/Scenes/Props/Palm_Tree.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Content/Shaders/Zelda_Water_Shader.gdshader" type="Shader" id=5]
+[ext_resource path="res://Content/Assets/textures/Grass_01.png" type="Texture" id=6]
+[ext_resource path="res://Content/Sounds/Music/sea_waves.wav" type="AudioStream" id=7]
+
+[sub_resource type="PlaneMesh" id=5]
+size = Vector2( 8, 8 )
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = ExtResource( 5 )
+shader_param/WATER_COL = Color( 0.04, 0.38, 0.88, 1 )
+shader_param/WATER2_COL = Color( 0.04, 0.35, 0.78, 1 )
+shader_param/FOAM_COL = Color( 0.8125, 0.9609, 0.9648, 1 )
+shader_param/distortion_speed = 2.0
+shader_param/tile = Vector2( 64, 64 )
+shader_param/height = 2.0
+shader_param/wave_size = Vector2( 2, 2 )
+shader_param/wave_speed = 1.5
+
+[sub_resource type="SpatialMaterial" id=7]
+albedo_texture = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=1]
+size = 62
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 2
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 50
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 5
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 50
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 5
+font_data = ExtResource( 3 )
+
+[node name="Credits" type="CanvasLayer"]
+script = ExtResource( 2 )
+level_name = "Credits"
+
+[node name="Background" type="Spatial" parent="."]
+
+[node name="ViewportContainer" type="ViewportContainer" parent="Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Viewport" type="Viewport" parent="Background/ViewportContainer"]
+size = Vector2( 1024, 600 )
+handle_input_locally = false
+render_target_update_mode = 3
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
+
+[node name="Camera" type="Camera" parent="Background/ViewportContainer/Viewport"]
+transform = Transform( 1, 0, 0, 0, 0.963775, -0.266717, 0, 0.266717, 0.963775, -13.8057, 6.19617, 16.2842 )
+current = true
+far = 983.7
+
+[node name="MeshInstance" type="MeshInstance" parent="Background"]
+transform = Transform( 245.329, 0, 0, 0, 1, 0, 0, 0, 135.012, 0, 0, 0 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="Waves" type="AudioStreamPlayer3D" parent="Background/MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -41.7938, 0, 46.3345 )
+stream = ExtResource( 7 )
+unit_db = 11.736
+unit_size = 2.1
+autoplay = true
+bus = "Music"
+emission_angle_enabled = true
+
+[node name="Palm_Tree" parent="Background" instance=ExtResource( 4 )]
+transform = Transform( 0.938612, -0.245964, -0.241888, 0.202727, 0.960599, -0.190133, 0.279124, 0.129424, 0.951493, -3.85584, 3.32375, -0.890595 )
+
+[node name="Palm_Tree2" parent="Background" instance=ExtResource( 4 )]
+transform = Transform( 0.93778, -1.49012e-08, -0.34723, -0.129738, 0.927575, -0.350388, 0.322082, 0.373635, 0.869861, 0, 3, 0 )
+
+[node name="CSGCylinder" type="CSGCylinder" parent="Background"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+radius = 13.335
+height = 6.978
+material = SubResource( 7 )
+
+[node name="MenuControl" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+
+[node name="Menu" type="CenterContainer" parent="MenuControl"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuControl/Menu"]
+margin_left = 123.0
+margin_top = 89.0
+margin_right = 900.0
+margin_bottom = 511.0
+alignment = 1
+
+[node name="Title" type="Label" parent="MenuControl/Menu/VBoxContainer"]
+margin_right = 777.0
+margin_bottom = 117.0
+size_flags_vertical = 5
+custom_fonts/font = SubResource( 1 )
+text = "Thank you for playing
+"
+align = 1
+valign = 1
+
+[node name="Score" type="Label" parent="MenuControl/Menu/VBoxContainer"]
+margin_top = 121.0
+margin_right = 777.0
+margin_bottom = 238.0
+size_flags_vertical = 5
+custom_fonts/font = SubResource( 1 )
+text = "Score:
+"
+align = 1
+valign = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MenuControl/Menu/VBoxContainer"]
+margin_top = 242.0
+margin_right = 777.0
+margin_bottom = 322.0
+rect_min_size = Vector2( 0, 80 )
+
+[node name="Menu_Button" type="Button" parent="MenuControl/Menu/VBoxContainer"]
+margin_top = 326.0
+margin_right = 777.0
+margin_bottom = 372.0
+theme = ExtResource( 1 )
+custom_fonts/font = SubResource( 2 )
+text = "Menu"
+
+[node name="Exit" type="Button" parent="MenuControl/Menu/VBoxContainer"]
+margin_top = 376.0
+margin_right = 777.0
+margin_bottom = 422.0
+custom_fonts/font = SubResource( 4 )
+text = "Quit"
+
+[connection signal="pressed" from="MenuControl/Menu/VBoxContainer/Menu_Button" to="." method="_on_Menu_Button_pressed"]
+[connection signal="pressed" from="MenuControl/Menu/VBoxContainer/Exit" to="." method="_on_Exit_pressed"]

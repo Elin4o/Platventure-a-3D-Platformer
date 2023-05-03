@@ -38,6 +38,7 @@ func _on_Start_Button_pressed():
 	$MenuControl/Menu/VBoxContainer/Start_Button.disabled = true
 	$MenuControl/Menu/VBoxContainer/Options.disabled = true
 	$MenuControl/Menu/VBoxContainer/Exit.disabled = true
+	GlobalSettings.score = 0
 
 
 func _on_Options_pressed():

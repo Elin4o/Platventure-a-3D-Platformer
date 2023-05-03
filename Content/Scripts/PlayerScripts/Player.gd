@@ -163,10 +163,12 @@ func _process(_delta)->void:
 
 func kill():
 	global_transform.origin = respawn_point
+	GlobalSettings.score -= 50
 	health.current = 3
 	
 func hurt_Sound():
 	$Hurt.play()
+	
 
 func set_checkpoint(pos,object):
 	respawn_point = pos
@@ -179,10 +181,10 @@ func set_checkpoint(pos,object):
 func _on_EnemyDetection_body_entered(body):
 	if body.is_in_group("Enemies"):
 		health.current -= 1
-		_velocity.y = 4
+		_velocity = (global_transform.origin - body.global_transform.origin).normalized()*30
+		_velocity.y = 5
 		_snap_vector = Vector3.ZERO
 		move_and_slide_with_snap(_velocity,_snap_vector)
 
-		_velocity.x = -30
 		$Hurt.play()
 		

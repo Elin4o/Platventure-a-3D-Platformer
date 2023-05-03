@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Content/Font/upheaval/upheavtt.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Content/Scripts/Levels/Start Menu.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Content/Sounds/SFX/click_004.ogg" type="AudioStream" id=6]
 [ext_resource path="res://Content/Assets/textures/Grass_01.png" type="Texture" id=7]
 [ext_resource path="res://Content/Scenes/Props/Palm_Tree.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Content/Sounds/Music/sea_waves.wav" type="AudioStream" id=9]
 
 [sub_resource type="PlaneMesh" id=7]
 size = Vector2( 8, 8 )
@@ -80,6 +81,15 @@ far = 983.7
 transform = Transform( 245.329, 0, 0, 0, 1, 0, 0, 0, 135.012, 0, 0, 0 )
 mesh = SubResource( 7 )
 material/0 = SubResource( 8 )
+
+[node name="Waves" type="AudioStreamPlayer3D" parent="Background/MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -41.7938, 0, 46.3345 )
+stream = ExtResource( 9 )
+unit_db = 11.736
+unit_size = 2.1
+autoplay = true
+bus = "Music"
+emission_angle_enabled = true
 
 [node name="Palm_Tree" parent="Background" instance=ExtResource( 8 )]
 transform = Transform( 0.938612, -0.245964, -0.241888, 0.202727, 0.960599, -0.190133, 0.279124, 0.129424, 0.951493, -3.85584, 3.32375, -0.890595 )

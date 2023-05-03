@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
+[ext_resource path="res://Content/Sounds/SFX/hitHurt.wav" type="AudioStream" id=1]
 [ext_resource path="res://Content/Scripts/Enemy.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
@@ -7,6 +8,31 @@ height = 0.002
 
 [sub_resource type="BoxShape" id=55]
 extents = Vector3( 0.571093, 0.608012, 0.538974 )
+
+[sub_resource type="ParticlesMaterial" id=56]
+emission_shape = 1
+emission_sphere_radius = 0.01
+direction = Vector3( 1, 1, 1 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 10.0
+initial_velocity_random = 0.37
+angular_velocity = 148.24
+damping = 1.0
+angle = 720.0
+angle_random = 1.0
+
+[sub_resource type="SpatialMaterial" id=7]
+flags_unshaded = true
+proximity_fade_enable = true
+proximity_fade_distance = 1.5
+
+[sub_resource type="SphereMesh" id=57]
+material = SubResource( 7 )
+radius = 0.75
+height = 1.5
+radial_segments = 8
+rings = 8
 
 [node name="Enemy" type="KinematicBody" groups=["Enemies"]]
 script = ExtResource( 3 )
@@ -21,4 +47,20 @@ shape = SubResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.824874, 0.0984961 )
 shape = SubResource( 55 )
 
+[node name="Destroyed" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 1 )
+unit_db = -5.459
+unit_size = 80.6
+max_db = -9.667
+pitch_scale = 0.2
+
+[node name="Death" type="Particles" parent="."]
+emitting = false
+amount = 9
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 56 )
+draw_pass_1 = SubResource( 57 )
+
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
+[connection signal="finished" from="Destroyed" to="." method="_on_Destroyed_finished"]

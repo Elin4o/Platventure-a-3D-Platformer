@@ -10,7 +10,7 @@ onready var anim_player = $AnimationPlayer
 func _ready():
 	respawn_pos = $RespawnPoint.get_global_transform().origin
 
-func _process(delta):
+func _process(_delta):
 	should_anim_play()
 		
 

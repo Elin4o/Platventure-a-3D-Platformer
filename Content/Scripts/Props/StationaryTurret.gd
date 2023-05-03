@@ -4,7 +4,7 @@ export var bullet : PackedScene
 
 var can_shoot : bool = true
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if can_shoot:
 		shoot()
 		

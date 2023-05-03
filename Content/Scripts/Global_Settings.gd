@@ -1,5 +1,7 @@
 extends Node
 
+var score = 0
+
 func toggle_fullscreen(value):
 	OS.window_fullscreen = value
 	var screen_size = OS.get_screen_size()
