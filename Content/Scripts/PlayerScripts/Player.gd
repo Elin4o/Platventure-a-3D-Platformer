@@ -1,6 +1,5 @@
 extends KinematicBody
 
-
 signal collected_coin
 export (PackedScene) var foot_dust
 export (NodePath) var animationTree
@@ -13,7 +12,6 @@ export var gravity_multiplier := 3
 export var low_jump_gravity_multiplier := 2.0
 export(float, 0.0, 1.0, 0.05) var air_control := 0.3
 var movement_speed : float
-var earth_gravity:= 9.807
 var jump_released = false
 var _velocity := Vector3.ZERO
 var _snap_vector := Vector3.DOWN
@@ -24,7 +22,7 @@ var collected_coins = 0
 onready var floor_max_angle: float = deg2rad(46.0)
 onready var gravity = (ProjectSettings.get_setting("physics/3d/default_gravity") * gravity_multiplier)
 onready var health = $Health
-onready var healthbar = $UI/Interface/HealthBar
+onready var healthbar = $UI/Interface/Health/HealthBar
 onready var _anim_tree = get_node(animationTree) 
 onready var _spring_arm : SpringArm = $SpringArm
 onready var _model : Spatial = $PlayerMesh
@@ -38,12 +36,17 @@ func _physics_process(delta:float) -> void:
 	var is_running := is_on_floor() and not is_zero_approx(_velocity.x) and movement_speed == max_speed
 	var is_walking := is_on_floor() and not is_zero_approx(_velocity.x) and movement_speed == normal_speed
 
+	if _spring_arm != null:
+		_spring_arm.translation = translation
 	# Directions
 	get_movement_direction()
 		
 	slopes(delta)
 	#Horizontal And Vertical Movement Speed
 	apply_movement(delta)
+	
+	if Input.is_action_just_pressed("forward") || Input.is_action_just_pressed("back") || Input.is_action_just_pressed("left") || Input.is_action_just_pressed("right"):
+		GlobalSettings.timer_on = true
 	
 	if is_jumping:
 		_velocity.y +=  jump_height
@@ -118,6 +121,7 @@ func get_movement_direction():
 	move_direction.z = Input.get_action_strength("back") - Input.get_action_strength("forward")
 	move_direction = move_direction.rotated(Vector3.UP, _spring_arm.rotation.y).normalized()
 	
+	
 	return move_direction.normalized() if move_direction.length() > 1 else move_direction 
 	
 func apply_movement(delta):
@@ -157,10 +161,6 @@ func player_gravity(delta):
 	if Input.is_action_just_released("jump"):
 		jump_released = true;
 	
-func _process(_delta)->void: 
-	if _spring_arm != null:
-		_spring_arm.translation = translation
-
 func kill():
 	global_transform.origin = respawn_point
 	GlobalSettings.score -= 50
@@ -169,7 +169,6 @@ func kill():
 func hurt_Sound():
 	$Hurt.play()
 	
-
 func set_checkpoint(pos,object):
 	respawn_point = pos
 	if last_checkpoint:
@@ -177,14 +176,13 @@ func set_checkpoint(pos,object):
 	last_checkpoint = object
 	object.is_current_checkpoint = true
 
-
 func _on_EnemyDetection_body_entered(body):
 	if body.is_in_group("Enemies"):
 		health.current -= 1
 		_velocity = (global_transform.origin - body.global_transform.origin).normalized()*30
 		_velocity.y = 5
 		_snap_vector = Vector3.ZERO
-		move_and_slide_with_snap(_velocity,_snap_vector)
+#		move_and_slide_with_snap(_velocity,_snap_vector)
 
 		$Hurt.play()
 		

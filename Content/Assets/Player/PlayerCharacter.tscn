@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://Content/Scripts/PlayerScripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Content/Assets/Player/SpringArmMovement.gd" type="Script" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://Content/Assets/Coin.svg" type="Texture" id=14]
 [ext_resource path="res://Content/Font/upheaval/upheavtt.ttf" type="DynamicFontData" id=15]
 [ext_resource path="res://Content/Scripts/Player_Interface.gd" type="Script" id=16]
+[ext_resource path="res://Content/Font/NotoSans-Black.ttf" type="DynamicFontData" id=17]
 
 [sub_resource type="AnimationNodeAnimation" id=29]
 animation = "T-Pose-loop"
@@ -87,6 +88,10 @@ emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
 emission_texture = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=59]
+size = 48
+font_data = ExtResource( 17 )
 
 [sub_resource type="Shader" id=53]
 code = "/**
@@ -211,64 +216,74 @@ visible = false
 [node name="Interface" type="Control" parent="UI"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -1.0
-margin_bottom = -1.0
 mouse_filter = 2
 
-[node name="HealthBar" parent="UI/Interface" instance=ExtResource( 7 )]
-margin_left = 37.0
-margin_top = 24.0
-margin_right = 243.0
-margin_bottom = 53.0
+[node name="Time" type="Label" parent="UI/Interface"]
+anchor_right = 1.0
+margin_bottom = 46.0
+custom_fonts/font = SubResource( 59 )
+text = "00:00:00"
+align = 1
+valign = 1
 
-[node name="HeartSprite" type="Sprite" parent="UI/Interface"]
+[node name="Health" type="Node" parent="UI/Interface"]
+
+[node name="HealthBar" parent="UI/Interface/Health" instance=ExtResource( 7 )]
+margin_left = 37.0
+margin_top = 23.0
+margin_right = 243.0
+margin_bottom = 52.0
+
+[node name="HeartSprite" type="Sprite" parent="UI/Interface/Health"]
 material = SubResource( 54 )
-position = Vector2( 48, 38 )
+position = Vector2( 48, 37 )
 scale = Vector2( 0.0827414, 0.0827414 )
 texture = ExtResource( 13 )
 
-[node name="CoinPanel" type="Panel" parent="UI/Interface"]
+[node name="CollectableScore" type="Node" parent="UI/Interface"]
+
+[node name="CoinPanel" type="Panel" parent="UI/Interface/CollectableScore"]
 margin_left = 824.0
-margin_top = 10.0
+margin_top = 9.0
 margin_right = 1013.0
-margin_bottom = 88.0
+margin_bottom = 87.0
 custom_styles/panel = SubResource( 55 )
 
-[node name="ScorePanel" type="Panel" parent="UI/Interface"]
+[node name="ScorePanel" type="Panel" parent="UI/Interface/CollectableScore"]
 margin_left = 880.0
-margin_top = 95.0
+margin_top = 94.0
 margin_right = 1011.0
-margin_bottom = 138.0
+margin_bottom = 137.0
 custom_styles/panel = SubResource( 55 )
 
-[node name="Score" type="Label" parent="UI/Interface"]
+[node name="Score" type="Label" parent="UI/Interface/CollectableScore"]
 margin_left = 897.0
-margin_top = 100.0
+margin_top = 99.0
 margin_right = 997.0
-margin_bottom = 129.0
+margin_bottom = 128.0
 custom_fonts/font = SubResource( 58 )
 text = "0"
 align = 1
 valign = 1
 
-[node name="Coin" type="Sprite" parent="UI/Interface"]
-position = Vector2( 867, 50 )
+[node name="Coin" type="Sprite" parent="UI/Interface/CollectableScore"]
+position = Vector2( 867, 49 )
 scale = Vector2( 0.226, 0.226 )
 texture = ExtResource( 14 )
 
-[node name="Label" type="Label" parent="UI/Interface"]
+[node name="Label" type="Label" parent="UI/Interface/CollectableScore"]
 margin_left = 901.0
-margin_top = 32.0
+margin_top = 31.0
 margin_right = 925.0
-margin_bottom = 65.0
+margin_bottom = 64.0
 custom_fonts/font = SubResource( 56 )
 text = "X"
 
-[node name="CoinCounter" type="Label" parent="UI/Interface"]
+[node name="CoinCounter" type="Label" parent="UI/Interface/CollectableScore"]
 margin_left = 935.0
-margin_top = 22.0
+margin_top = 21.0
 margin_right = 971.0
-margin_bottom = 76.0
+margin_bottom = 75.0
 custom_fonts/font = SubResource( 57 )
 text = "0"
 

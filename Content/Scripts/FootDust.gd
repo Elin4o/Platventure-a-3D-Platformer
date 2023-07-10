@@ -1,5 +1,9 @@
 extends Particles
 
 func _ready():
-	yield(get_tree().create_timer(2),"timeout")
+	$Timer.start()
+
+
+func _on_Timer_timeout():
 	queue_free()
+

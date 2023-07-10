@@ -2,6 +2,7 @@ extends CanvasLayer
 
 onready var menu = $MenuControl/Menu
 onready var options = $MenuControl/Options
+onready var stats = $MenuControl/Statistics
 onready var video = $MenuControl/Video
 onready var audio = $MenuControl/Audio
 
@@ -21,10 +22,22 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	$MenuControl/Menu/VBoxContainer/Start_Button.disabled = false
 	$MenuControl/Menu/VBoxContainer/Options.disabled = false
+	$MenuControl/Menu/VBoxContainer/Stats.disabled = false
 	$MenuControl/Menu/VBoxContainer/Exit.disabled = false
+	
+	$"MenuControl/Statistics/Statistics/Score&Time/Score/Highscore".text = String(SaveSettings.game_data.highscore)
+	
+	var best_time = SaveSettings.game_data.time
+	var miliseconds = fmod(best_time,1)*1000
+	var seconds = fmod(best_time,60)
+	var minutes = fmod(best_time,60*60)/60
+	
+	var best_time_passed = "%02d:%02d:%03d" % [ minutes , seconds, miliseconds]
+	$"MenuControl/Statistics/Statistics/Score&Time/Time/Time".text = best_time_passed
 	
 	fullscreeon_checkbox.pressed = SaveSettings.game_data.fullscreen_on
 	GlobalSettings.toggle_fullscreen(SaveSettings.game_data.fullscreen_on)
+	
 	vsync_checkbox.pressed = SaveSettings.game_data.vsync_on
 	borderless_checkbox.pressed = SaveSettings.game_data.borderless_on
 	
@@ -35,24 +48,28 @@ func _ready():
 	
 func _on_Start_Button_pressed():
 	emit_signal("level_changed",level_name)
+	
 	$MenuControl/Menu/VBoxContainer/Start_Button.disabled = true
 	$MenuControl/Menu/VBoxContainer/Options.disabled = true
+	$MenuControl/Menu/VBoxContainer/Stats.disabled = true
 	$MenuControl/Menu/VBoxContainer/Exit.disabled = true
-	GlobalSettings.score = 0
+	
+	reset_score()
 
 
 func _on_Options_pressed():
 	play_soundFX()
 	show_and_hide(options,menu)
 
+func _on_Stats_pressed():
+	show_and_hide(stats,menu)
+
+func _on_BackFromStats_pressed():
+	show_and_hide(menu,stats)
+
 
 func _on_Exit_pressed():
 	get_tree().quit()
-
-
-func show_and_hide(first,second):
-	first.show()
-	second.hide()
 
 
 func _on_Video_pressed():
@@ -98,3 +115,11 @@ func _on_BackFromOptions_pressed():
 
 func play_soundFX():
 	$Click.play()
+
+
+func show_and_hide(first,second):
+	first.show()
+	second.hide()
+
+func reset_score():
+	GlobalSettings.score = 0
